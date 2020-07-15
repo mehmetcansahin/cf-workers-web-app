@@ -35,6 +35,7 @@ pub type Params = Vec<(String, String)>;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct ResponseData {
+    pub code: u16,
     pub status: String,
     pub message: String,
 }
@@ -42,6 +43,7 @@ pub struct ResponseData {
 impl Default for ResponseData {
     fn default() -> Self {
         ResponseData {
+            code: 200,
             status: "success".to_string(),
             message: "".to_string(),
         }
