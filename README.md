@@ -1,5 +1,40 @@
 # Cloudflare Workers Web App
 
+Simple web app example for Cloudflare workers.
+
+Cloudflare Workers + WASM + Rust = :heart:
+
+### API Endpoints
+
+- GET /
+  {"code":200,"status":"success","message":"Hello, World!"}
+- GET /hello/mehmetcan
+  {"code":200,"status":"success","message":"Hello, mehmetcan!"}
+
+### Install
+
+1. Install [Rust](https://www.rust-lang.org/learn/get-started)
+2. Install [Wrangler](https://developers.cloudflare.com/workers/tooling/wrangler/install)
+3. Install wasm-pack
+
+```bash
+# Install wasm-pack
+curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+```
+
+### Development
+
+1. wrangler dev
+
+## Benchmark
+
+```bash
+$ ab -c 10 -n 1000 https://cloudflare_worker_url/
+```
+
+Requests: 1k
+Median CPU Time: 0.7ms
+
 # 👷‍♀️🦀🕸️ `rustwasm-worker-template`
 
 A template for kick starting a Cloudflare worker project using
@@ -10,11 +45,11 @@ publishing the resulting worker to Cloudflare's worker infrastructure.
 
 ## 🔋 Batteries Included
 
-* [`wasm-bindgen`](https://github.com/rustwasm/wasm-bindgen) for communicating
+- [`wasm-bindgen`](https://github.com/rustwasm/wasm-bindgen) for communicating
   between WebAssembly and JavaScript.
-* [`console_error_panic_hook`](https://github.com/rustwasm/console_error_panic_hook)
+- [`console_error_panic_hook`](https://github.com/rustwasm/console_error_panic_hook)
   for logging panic messages to the developer console.
-* [`wee_alloc`](https://github.com/rustwasm/wee_alloc), an allocator optimized
+- [`wee_alloc`](https://github.com/rustwasm/wee_alloc), an allocator optimized
   for small code size.
 
 ## 🚴 Usage
@@ -39,3 +74,7 @@ wasm-pack build
 ```
 wasm-pack test --headless --firefox
 ```
+
+# TODO
+
+- Wasm Template ps. wrangler generate
