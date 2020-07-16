@@ -2,9 +2,10 @@ extern crate cfg_if;
 extern crate wasm_bindgen;
 
 #[macro_use]
-pub mod utils;
-mod routes;
+pub mod macros;
 pub mod controllers;
+mod routes;
+pub mod utils;
 
 use cfg_if::cfg_if;
 use wasm_bindgen::prelude::*;
