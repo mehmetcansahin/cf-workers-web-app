@@ -1,10 +1,10 @@
 use crate::controllers::home::{hello_user, index};
-use crate::utils::{Params, ResponseData};
+use crate::utils::{json_response, Params, ResponseData};
 use path_tree::PathTree;
-use web_sys::{Request, Response, ResponseInit, Url};
+use web_sys::{Request, Response, Url};
 
-pub fn api_tree() -> PathTree<Box<dyn Fn(Request, Params) -> ResponseData>> {
-    let mut tree = PathTree::<Box<dyn Fn(Request, Params) -> ResponseData>>::new();
+pub fn api_tree() -> PathTree<Box<dyn Fn(Request, Params) -> Response>> {
+    let mut tree = PathTree::<Box<dyn Fn(Request, Params) -> Response>>::new();
     tree.insert("/GET/", Box::new(index));
     tree.insert("/GET/hello/:username", Box::new(hello_user));
     tree
@@ -15,7 +15,7 @@ pub fn run(request: Request) -> Response {
 
     let url = Url::new(&request.url()).unwrap();
     let path = "/".to_owned() + request.method().as_str() + &url.pathname();
-    let response_data = match tree.find(&path) {
+    match tree.find(&path) {
         Some((node, params)) => {
             let params = params
                 .iter()
@@ -23,27 +23,14 @@ pub fn run(request: Request) -> Response {
                 .collect::<Params>();
             node(request, params)
         }
-        None => ResponseData {
-            code: 404,
-            status: "not_found".to_string(),
-            message: "404 NOT FOUND".to_string(),
-            ..Default::default()
-        },
-    };
-
-    let json = serde_json::to_string(&response_data).unwrap();
-    Response::new_with_opt_str_and_init(
-        Some(&json),
-        ResponseInit::new()
-            .headers(
-                headers! {
-                    "Content-Type" => "application/json",
-                    "Cache-Control" => "no-cache"
-                }
-                .as_ref(),
-            )
-            .status(response_data.code)
-            .as_ref(),
-    )
-    .unwrap()
+        None => {
+            let response_data = ResponseData {
+                code: 404,
+                status: "not_found".to_string(),
+                message: "404 NOT FOUND".to_string(),
+                ..Default::default()
+            };
+            json_response(response_data)
+        }
+    }
 }

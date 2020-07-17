@@ -1,5 +1,6 @@
 use cfg_if::cfg_if;
 use serde::{Deserialize, Serialize};
+use web_sys::{Response, ResponseInit};
 
 cfg_if! {
     // When the `console_error_panic_hook` feature is enabled, we can call the
@@ -34,4 +35,23 @@ impl Default for ResponseData {
             message: "".to_string(),
         }
     }
+}
+
+// TODO: macro, response_data type <T>
+pub fn json_response(response_data: <T>) -> Response {
+    let json = serde_json::to_string(&response_data).unwrap();
+    Response::new_with_opt_str_and_init(
+        Some(&json),
+        ResponseInit::new()
+            .headers(
+                headers! {
+                    "Content-Type" => "application/json",
+                    "Cache-Control" => "no-cache"
+                }
+                .as_ref(),
+            )
+            .status(response_data.code)
+            .as_ref(),
+    )
+    .unwrap()
 }
