@@ -1,11 +1,8 @@
 [package]
-name = "cf-workers-web-app"
+name = "{{project-name}}"
 version = "0.1.0"
-authors = ["mehmetcansahin <sahinmcan@gmail.com>"]
+authors = ["{{authors}}"]
 edition = "2018"
-description = "Cloudflare Workers Web App"
-license = "MIT"
-repository = "https://github.com/mehmetcansahin/cf-workers-web-app.git"
 
 [lib]
 crate-type = ["cdylib", "rlib"]

@@ -22,11 +22,16 @@ Cloudflare Workers + WASM + Rust = :heart:
 curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
 ```
 
+```bash
+wrangler generate cf-wasm-worker-name https://github.com/mehmetcansahin/cf-workers-web-app.git
+cd cf-wasm-worker-name
+```
+
 ### Development
 
 1. wrangler dev
 
-## Benchmark
+### Benchmark
 
 ```bash
 $ ab -c 10 -n 1000 https://cloudflare_worker_url/
@@ -74,7 +79,3 @@ wasm-pack build
 ```
 wasm-pack test --headless --firefox
 ```
-
-# TODO
-
-- Wasm Template ps. wrangler generate
