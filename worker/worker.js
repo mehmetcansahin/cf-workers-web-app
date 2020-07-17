@@ -11,5 +11,4 @@ async function handleEvent(event) {
   await wasm_bindgen(wasm);
   const response = handle_event(event, event.request);
   return response;
-  // return new Response(response, { status: 200 });
 }
