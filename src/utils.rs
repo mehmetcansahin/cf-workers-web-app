@@ -37,9 +37,8 @@ impl Default for ResponseData {
     }
 }
 
-// TODO: macro, response_data type <T>
-pub fn json_response(response_data: <T>) -> Response {
-    let json = serde_json::to_string(&response_data).unwrap();
+pub fn json_response<T: Serialize>(data: T, code: u16) -> Response {
+    let json = serde_json::to_string(&data).unwrap();
     Response::new_with_opt_str_and_init(
         Some(&json),
         ResponseInit::new()
@@ -50,7 +49,7 @@ pub fn json_response(response_data: <T>) -> Response {
                 }
                 .as_ref(),
             )
-            .status(response_data.code)
+            .status(code)
             .as_ref(),
     )
     .unwrap()

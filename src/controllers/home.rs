@@ -6,7 +6,7 @@ pub fn index(_request: Request, _params: Params) -> Response {
         message: "Hello, World!".to_string(),
         ..Default::default()
     };
-    json_response(response_data)
+    json_response(response_data, 200)
 }
 
 pub fn hello_user(_request: Request, params: Params) -> Response {
@@ -18,5 +18,5 @@ pub fn hello_user(_request: Request, params: Params) -> Response {
         message: hello_user,
         ..Default::default()
     };
-    json_response(response_data)
+    json_response(response_data, 200)
 }

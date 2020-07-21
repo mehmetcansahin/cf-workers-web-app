@@ -30,7 +30,7 @@ pub fn run(request: Request) -> Response {
                 message: "404 NOT FOUND".to_string(),
                 ..Default::default()
             };
-            json_response(response_data)
+            json_response(response_data, 404)
         }
     }
 }
