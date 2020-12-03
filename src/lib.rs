@@ -1,15 +1,13 @@
 extern crate cfg_if;
 extern crate wasm_bindgen;
 
-#[macro_use]
-pub mod macros;
-pub mod controllers;
-mod routes;
-pub mod utils;
-
+use crate::controllers::home::index;
 use cfg_if::cfg_if;
 use wasm_bindgen::prelude::*;
 use web_sys::{ExtendableEvent, Request, Response};
+use webworker::WebWorker;
+
+mod controllers;
 
 cfg_if! {
     // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global allocator.
@@ -21,6 +19,8 @@ cfg_if! {
 }
 
 #[wasm_bindgen]
-pub fn handle_event(_event: ExtendableEvent, request: Request) -> Response {
-    routes::run(request)
+pub fn handle_event(event: ExtendableEvent, request: Request) -> Response {
+    let mut ww = WebWorker::default();
+    ww.route("/GET/".to_string(), Box::new(index));
+    ww.handle(event, request)
 }
