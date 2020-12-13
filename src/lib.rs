@@ -24,7 +24,7 @@ cfg_if! {
 pub fn handle_event(_event: ExtendableEvent, request: Request) -> Response {
     let mut ww = WebWorker::new();
     let mut router = Router::new();
-    router.add("/GET/".to_string(), Box::new(index));
+    router.get("/", Box::new(index));
     ww.mount(router);
     ww.handle(request)
 }
