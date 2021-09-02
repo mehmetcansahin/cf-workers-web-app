@@ -2,14 +2,16 @@
 
 Simple web app example for Cloudflare workers.
 
+Built with [waserv](https://github.com/mehmetcansahin/waserv)
+
 Cloudflare Workers + WASM + Rust = :heart:
 
 ### API Endpoints
 
 - GET /
-  {"code":200,"status":"success","message":"Hello, World!"}
+  {"message":"Hello, World!"}
 - GET /hello/mehmetcan
-  {"code":200,"status":"success","message":"Hello, mehmetcan!"}
+  {"message":"Hello, mehmetcan!"}
 
 ### Install
 

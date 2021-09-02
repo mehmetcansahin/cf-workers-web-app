@@ -1,13 +1,12 @@
 extern crate cfg_if;
+extern crate waserv;
 extern crate wasm_bindgen;
-#[macro_use]
-extern crate webworker;
 
-use crate::controllers::home::index;
+use crate::controllers::home::{index, hello};
 use cfg_if::cfg_if;
+use waserv::{router::Router, Waserv};
 use wasm_bindgen::prelude::*;
 use web_sys::{ExtendableEvent, Request, Response};
-use webworker::{router::Router, WebWorker};
 
 mod controllers;
 
@@ -22,9 +21,10 @@ cfg_if! {
 
 #[wasm_bindgen]
 pub fn handle_event(_event: ExtendableEvent, request: Request) -> Response {
-    let mut ww = WebWorker::new();
     let mut router = Router::new();
     router.get("/", Box::new(index));
+    router.get("/hello/:name", Box::new(hello));
+    let mut ww = Waserv::new();
     ww.mount(router);
     ww.handle(request)
 }
